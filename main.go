@@ -9,6 +9,7 @@ import (
 	"github.com/mhdianrush/go-crud-web/config"
 	"github.com/mhdianrush/go-crud-web/controllers/categorycontroller"
 	"github.com/mhdianrush/go-crud-web/controllers/homecontroller"
+	"github.com/mhdianrush/go-crud-web/controllers/productcontroller"
 )
 
 func main() {
@@ -17,11 +18,18 @@ func main() {
 	// homepage
 	http.HandleFunc("/", homecontroller.Welcome)
 
-	// categories
+	// Categories
 	http.HandleFunc("/categories", categorycontroller.Index)
 	http.HandleFunc("/categories/add", categorycontroller.Add)
 	http.HandleFunc("/categories/edit", categorycontroller.Edit)
 	http.HandleFunc("/categories/delete", categorycontroller.Delete)
+
+	// Products
+	http.HandleFunc("/products", productcontroller.Index)
+	http.HandleFunc("/products/add", productcontroller.Add)
+	http.HandleFunc("/products/detail", productcontroller.Detail)
+	http.HandleFunc("/products/edit", productcontroller.Edit)
+	http.HandleFunc("/products/delete", productcontroller.Delete)
 
 	log.Println("Server Running on Port 8080")
 
