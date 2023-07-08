@@ -15,27 +15,29 @@ import (
 func main() {
 	config.ConnectDB()
 
+	mux := http.NewServeMux()
+
 	// homepage
-	http.HandleFunc("/", homecontroller.Welcome)
+	mux.HandleFunc("/", homecontroller.Welcome)
 
 	// Categories
-	http.HandleFunc("/categories", categorycontroller.Index)
-	http.HandleFunc("/categories/add", categorycontroller.Add)
-	http.HandleFunc("/categories/edit", categorycontroller.Edit)
-	http.HandleFunc("/categories/delete", categorycontroller.Delete)
+	mux.HandleFunc("/categories", categorycontroller.Index)
+	mux.HandleFunc("/categories/add", categorycontroller.Add)
+	mux.HandleFunc("/categories/edit", categorycontroller.Edit)
+	mux.HandleFunc("/categories/delete", categorycontroller.Delete)
 
 	// Products
-	http.HandleFunc("/products", productcontroller.Index)
-	http.HandleFunc("/products/add", productcontroller.Add)
-	http.HandleFunc("/products/detail", productcontroller.Detail)
-	http.HandleFunc("/products/edit", productcontroller.Edit)
-	http.HandleFunc("/products/delete", productcontroller.Delete)
+	mux.HandleFunc("/products", productcontroller.Index)
+	mux.HandleFunc("/products/add", productcontroller.Add)
+	mux.HandleFunc("/products/detail", productcontroller.Detail)
+	mux.HandleFunc("/products/edit", productcontroller.Edit)
+	mux.HandleFunc("/products/delete", productcontroller.Delete)
 
 	log.Println("Server Running on Port 8080")
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: nil,
+		Handler: mux,
 	}
 	err := server.ListenAndServe()
 	if err != nil {
