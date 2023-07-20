@@ -50,14 +50,14 @@
       <a href="/categories/add" class="btn btn-primary">Add Category</a>
       <table class="table table-bordered mt-2 text-center">
         <thead>
-          <tr>
+          <tr class="table-warning">
             <th>Name</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {{ range .categories}}
-          <tr>
+          <tr class="table-secondary">
             <td>{{.Name}}</td>
             <td>
               <a
