@@ -51,7 +51,7 @@
       <a href="/products/add" class="btn btn-primary">Add Product</a>
       <table class="table table-bordered mt-2 text-center">
         <thead>
-          <tr>
+          <tr class="table-warning">
             <th>Name</th>
             <th>Category</th>
             <th>Stock</th>
@@ -60,7 +60,7 @@
         </thead>
         <tbody>
           {{ range .products }}
-          <tr>
+          <tr class="table-secondary">
             <td>{{.Name}}</td>
             <td>{{.Category.Name}}</td>
             <td>{{.Stock}}</td>
