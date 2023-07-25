@@ -8,7 +8,6 @@ import (
 
 	"github.com/mhdianrush/go-crud-web/config"
 	"github.com/mhdianrush/go-crud-web/controllers/categorycontroller"
-	"github.com/mhdianrush/go-crud-web/controllers/homecontroller"
 	"github.com/mhdianrush/go-crud-web/controllers/productcontroller"
 )
 
@@ -16,9 +15,6 @@ func main() {
 	config.ConnectDB()
 
 	mux := http.NewServeMux()
-
-	// homepage
-	mux.HandleFunc("/", homecontroller.Welcome)
 
 	// Categories
 	mux.HandleFunc("/categories", categorycontroller.Index)
