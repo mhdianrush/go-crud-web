@@ -61,7 +61,7 @@ func Update(id int, category entities.Category) bool {
 		panic(err)
 	}
 	result, err := query.RowsAffected()
-	// jika data berhasil diubah, RowsAffected() akan me-return 1
+	
 	if err != nil {
 		panic(err)
 	}
