@@ -38,7 +38,6 @@ func Create(category entities.Category) bool {
 		panic(err)
 	}
 	return lastInsertId > 0
-	// if success, the return bool is true
 }
 
 func Detail(id int) entities.Category {
