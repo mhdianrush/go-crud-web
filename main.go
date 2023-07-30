@@ -1,42 +1,50 @@
 package main
 
 import (
-	"log"
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 
 	"github.com/mhdianrush/go-crud-web/config"
 	"github.com/mhdianrush/go-crud-web/controllers/categorycontroller"
 	"github.com/mhdianrush/go-crud-web/controllers/productcontroller"
 )
 
+var logger = logrus.New()
+
 func main() {
 	config.ConnectDB()
 
-	mux := http.NewServeMux()
+	routes := mux.NewRouter()
 
-	// Categories
-	mux.HandleFunc("/categories", categorycontroller.Index)
-	mux.HandleFunc("/categories/add", categorycontroller.Add)
-	mux.HandleFunc("/categories/edit", categorycontroller.Edit)
-	mux.HandleFunc("/categories/delete", categorycontroller.Delete)
+	routes.HandleFunc("/categories", categorycontroller.Index)
+	routes.HandleFunc("/categories/add", categorycontroller.Add)
+	routes.HandleFunc("/categories/edit", categorycontroller.Edit)
+	routes.HandleFunc("/categories/delete", categorycontroller.Delete)
 
-	// Products
-	mux.HandleFunc("/products", productcontroller.Index)
-	mux.HandleFunc("/products/add", productcontroller.Add)
-	mux.HandleFunc("/products/detail", productcontroller.Detail)
-	mux.HandleFunc("/products/edit", productcontroller.Edit)
-	mux.HandleFunc("/products/delete", productcontroller.Delete)
+	routes.HandleFunc("/products", productcontroller.Index)
+	routes.HandleFunc("/products/add", productcontroller.Add)
+	routes.HandleFunc("/products/detail", productcontroller.Detail)
+	routes.HandleFunc("/products/edit", productcontroller.Edit)
+	routes.HandleFunc("/products/delete", productcontroller.Delete)
 
-	log.Println("Server Running on Port 8080")
+	err := godotenv.Load()
+	if err != nil {
+		logger.Printf("failed loaded env file %s", err.Error())
+	}
 
 	server := http.Server{
-		Addr:    ":8080",
-		Handler: mux,
+		Addr:    ":" + os.Getenv("SERVER_PORT"),
+		Handler: routes,
 	}
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
-		panic(err)
+		logger.Printf("failed connect to server %s", err.Error())
 	}
+
+	logger.Printf("Server Running on Port %s", os.Getenv("SERVER_PORT"))
 }
